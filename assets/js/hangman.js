@@ -66,6 +66,9 @@
             keyContainer.style.cursor = "pointer";
             keyContainer.className += "zoomKey";
             target.appendChild(keyContainer);
+            document.getElementById("key_"+key.toUpperCase()).addEventListener("click", () => {
+                checkKeyProposal(key.toUpperCase());
+            })
         })
     }
     function initLocalStorage(){
@@ -83,8 +86,21 @@
         localStorage.setItem("choosenLettersFalse",[]);
         //localStorage.setItem("keyboardKeys",["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]);
         localStorage.setItem("keyboardKeys",["A","Z","E","R","T","Y","U","I","O","P","Q","S","D","F","G","H","J","K","L","M","W","X","C","V","B","N"]);
-        localStorage.setItem("keyboard-fr",["A","Z","E","R","T","Y","U","I","O","P","Q","S","D","F","G","H","J","K","L","M","W","X","C","V","B","N"]);
-        localStorage.setItem("keyboard-en",["Q","W","E","R","T","Y","U","I","O","P","A","S","D","F","G","H","J","K","L","Z","X","C","V","B","N","M"]);
+        localStorage.setItem("keyboardFr",["A","Z","E","R","T","Y","U","I","O","P","Q","S","D","F","G","H","J","K","L","M","W","X","C","V","B","N"]);
+        localStorage.setItem("keyboardEn",["Q","W","E","R","T","Y","U","I","O","P","A","S","D","F","G","H","J","K","L","Z","X","C","V","B","N","M"]);
+    }
+    function initNewGame(){
+        localStorage.wordToGuess = initWordToGuess();
+        localStorage.gameOver = "false";
+        localStorage.gameResult = "unknown"; // values: unknown, won, lost
+        localStorage.score = 0;
+        localStorage.triesNb = 0;
+        localStorage.choosenLettersTrue = [];
+        localStorage.choosenLettersFalse = [];
+        initHangingScene();
+        initScore();
+        initTries();
+        initKeyboard();
     }
     // The function 'wordGuessed' checks if every letters have been found by user and returns a boolean
     function wordGuessed(){
@@ -116,6 +132,9 @@
         document.getElementById("messageContainer").innerHTML = contentMsgPanel;
         document.getElementById("messagePanel").style.display = "block";
         localStorage.nbPlayedGames++;
+        document.getElementById("playedGamesNb").innerHTML = localStorage.nbPlayedGames;
+        initNewGame();
+        console.log(localStorage);
     }
     function showFoundLetters(){
         let wordToGuess = localStorage.wordToGuess.split("");
@@ -133,6 +152,7 @@
         let finalScore = score + bonus;
         localStorage.score = finalScore;
         if(finalScore > localStorage.bestScore){localStorage.bestScore = finalScore;}
+        document.getElementById("bestScoreAmount").innerHTML = localStorage.bestScore;
         initScore();
     }
     function updateKeyboardKey(key){
@@ -187,33 +207,58 @@
                         localStorage.gameOver = "true";
                         localStorage.gameResult = "won";
                         messageGameOver();
+                    }else{
+                        updateKeyboardKey(key);
                     }
                 }else{
                     // La lettre proposée n'est pas comprise dans le mot à deviner
                     choosenLettersFalse.push(key);
                     localStorage.choosenLettersFalse = choosenLettersFalse.toString();
                     localStorage.triesNb++;
-                    initTries()
+                    initTries();
                     initHangingScene();
                     if(localStorage.triesNb >= localStorage.maxTries){
                         // Plus d'essais disponibles, fin de la partie (défaite)
                         localStorage.gameOver = "true";
                         localStorage.gameResult = "lost";
                         messageGameOver();
+                    }else{
+                        updateKeyboardKey(key);
                     }
                 }
-                updateKeyboardKey(key);
             }
             console.log(choosenLettersTrue);
             console.log(choosenLettersFalse);
         }
     }
     function togglePanels(){
-        if()
+        let panel1 = document.getElementById("gamePanel");
+        let panel2 = document.getElementById("messagePanel");
+        if(panel1.style.display == "none"){
+            panel2.style.display = "none";
+            panel1.style.display = "block";
+        }else{
+            panel1.style.display = "none";
+            panel2.style.display = "block";
+        }
+    }
+    function updateLanguage(lg){
+        switch (lg) {
+            case "fr":
+                localStorage.keyboardKeys = localStorage.keyboardFr;
+                localStorage.language = "fr";
+                break;
+            case "en":
+                localStorage.keyboardKeys = localStorage.keyboardEn;
+                localStorage.language = "en";
+                break;
+        }
+        initNewGame();
     }
     window.onload = function () {
         // initialisation
         if(!localStorage.nbPlayedGames>0){initLocalStorage();}
+        //initLocalStorage();
         let wordToGuess = initWordToGuess();
         initHangingScene();
         initScore();
@@ -225,5 +270,7 @@
             })
         })
         document.getElementById("play").addEventListener("click", () => togglePanels());
+        document.getElementById("btn-fr").addEventListener("click", () => updateLanguage("fr"));
+        document.getElementById("btn-en").addEventListener("click", () => updateLanguage("en"));
     }
 })();

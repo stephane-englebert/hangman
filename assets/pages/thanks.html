@@ -12,11 +12,22 @@
 <main>
     <div class="row">
         <section class="col-12 col-md-12">
-            Merci! Thanks for playing!
+            <div id="msgContainer"></div>
         </section>
     </div>
 </main>
 <footer></footer>
 <script src="assets/js/bootstrap.min.js"></script>
+<script>
+    window.onload = function () {
+        let message = "";
+        switch(localStorage.language){
+            case "fr": message += "Merci d'avoir joué!"; break;
+            case "en": message += "Thanks for playing!";break;
+        }
+        document.getElementById("msgContainer").innerHTML = message;
+        localStorage.clear();
+    }
+</script>
 </body>
 </html>
