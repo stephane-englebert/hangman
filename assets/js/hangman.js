@@ -247,10 +247,28 @@
             case "fr":
                 localStorage.keyboardKeys = localStorage.keyboardFr;
                 localStorage.language = "fr";
+                document.getElementById("playedGamesTitle").innerHTML = "Parties jouées";
+                document.getElementById("bestScoreTitle").innerHTML = "Meilleur score";
+                document.getElementById("messageContainer").innerHTML = "";
+                document.getElementById("play").innerHTML = "Jouer";
+                document.getElementById("quit").innerHTML = "Quitter";
+                document.getElementById("btn-fr").innerHTML = "Français";
+                document.getElementById("btn-fr").className = "focus";
+                document.getElementById("btn-en").innerHTML = "Anglais";
+                document.getElementById("btn-en").className = "";
                 break;
             case "en":
                 localStorage.keyboardKeys = localStorage.keyboardEn;
                 localStorage.language = "en";
+                document.getElementById("playedGamesTitle").innerHTML = "Played games";
+                document.getElementById("bestScoreTitle").innerHTML = "Best score";
+                document.getElementById("messageContainer").innerHTML = "";
+                document.getElementById("play").innerHTML = "Play";
+                document.getElementById("quit").innerHTML = "Quit";
+                document.getElementById("btn-fr").innerHTML = "French";
+                document.getElementById("btn-fr").className = "";
+                document.getElementById("btn-en").innerHTML = "English";
+                document.getElementById("btn-en").className = "focus";
                 break;
         }
         initNewGame();
@@ -258,7 +276,6 @@
     window.onload = function () {
         // initialisation
         if(!localStorage.nbPlayedGames>0){initLocalStorage();}
-        //initLocalStorage();
         let wordToGuess = initWordToGuess();
         initHangingScene();
         initScore();
