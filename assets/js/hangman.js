@@ -76,18 +76,75 @@
     }
     function initLocalStorage(){
         localStorage.setItem("wordToGuess","");
+        localStorage.setItem("gameOver",false);
+        localStorage.setItem("gameResult","unknown") // values: unknown, won, lost
         localStorage.setItem("score",0);
         localStorage.setItem("triesNb",0);
+        localStorage.setItem("maxTries",6);
         localStorage.setItem("choosenLettersTrue",[]);
         localStorage.setItem("choosenLettersFalse",[]);
         localStorage.setItem("keyboardKeys",["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]);
     }
+    // The function 'wordGuessed' checks if every letters have been found by user and returns a boolean
+    function wordGuessed(){
+        let wordGuessed = true;
+        let wordToGuess = localStorage.wordToGuess.split("");
+        wordToGuess.forEach(letter => {
+            let letterTrue = localStorage.choosenLettersTrue.includes(letter.toUpperCase());
+            if(!letterTrue){wordGuessed = false;}
+        })
+        return wordGuessed;
+    }
+    function messageGameOver(){
+        // TO-DO
+
+    }
     function checkKeyProposal(key){
         // TO-DO
-        console.log(localStorage.wordToGuess.includes(key));
-        console.log(key);
-        console.log(localStorage.wordToGuess);
-        if(localStorage.wordToGuess.includes(key.toLowerCase())){alert("Lettre contenue dans le mot!");}
+        let isGameOver = (localStorage.gameOver === "true");
+        let choosenLettersTrue = localStorage.choosenLettersTrue.split(",");
+        let choosenLettersFalse = localStorage.choosenLettersFalse.split(",");
+        // La partie est-elle toujours en cours?
+        if(!isGameOver){
+            // lettre déjà proposée?
+            let alreadyProposed = false;
+            if(localStorage.choosenLettersTrue.includes(key)){alreadyProposed = true;}
+            if(localStorage.choosenLettersFalse.includes(key)){alreadyProposed = true;}
+            console.clear();
+            if(!alreadyProposed){
+                // Si pas encore proposée, est-elle comprise dans le mot à deviner?
+                if(localStorage.wordToGuess.includes(key.toLowerCase())){
+                    console.log("Lettre '"+key+"' contenue dans le mot!");
+                    choosenLettersTrue.push(key);
+                    localStorage.choosenLettersTrue = choosenLettersTrue.toString() ;
+                    // Vérifier si le mot n'a pas été trouvé (fin partie)
+                    console.log("Word guessed? > " + wordGuessed());
+                    if(wordGuessed()){
+                        // Si mot trouvé, fin de la partie
+                    }else{
+                        // Si mot pas trouvé, on continue
+                    }
+                }else{
+                    console.log("Lettre '"+key+"' non présente dans le mot!");
+                    choosenLettersFalse.push(key);
+                    localStorage.choosenLettersFalse = choosenLettersFalse.toString();
+                    localStorage.triesNb++;
+                    // Vérifier si cet essai supplémentaire ne marque pas la fin de la partie...
+                    if(localStorage.triesNb<localStorage.maxTries){
+                        console.log("Tries "+localStorage.triesNb+"/"+localStorage.maxTries+" > Game continuing...");
+                    }else{
+                        localStorage.gameOver = "true";
+                        localStorage.gameResult = "lost";
+                        messageGameOver();
+                    }
+                }
+                console.log("choosenLettersTrue ("+typeof localStorage.choosenLettersTrue+")");
+                console.table(localStorage.choosenLettersTrue);
+                console.log("choosenLettersFalse");
+                console.log(localStorage.choosenLettersFalse);
+                console.log("Nb of tries > " + localStorage.triesNb);
+            }
+        }
     }
     window.onload = function () {
         // initialisation
