@@ -1,10 +1,14 @@
+@font-face {
+    font-family: "Rio Grande";
+    src:url("../fonts/RioGrande.ttf");
+}
 body{
     width: 100%;
     margin:auto;
 }
 main{
     position:relative;
-    max-width: 800px;
+    max-width: 650px;
     margin:auto;
     color:#ffffff;
 }
@@ -17,21 +21,27 @@ main{
 }
 #scenePanel{
     background-color: #000000;
-    min-height: 300px;
-    padding:25px;
+    background-image: url("../img/farwest.JPG");
+    background-size:contain;
+    background-repeat: no-repeat;
+    min-height: 250px;
 }
 #hangPanel{
-    background-color: #2c3034;
+    /*background-color: #2c3034;*/
     min-height: 250px;
 }
 #dataPanel{
-    background-color: #2c3034;
+    /*background-color: #2c3034;*/
     min-height: 250px;
 }
-#wordPanel{
-    background-color: #565e64;
+#wordToGuessContainer{
+    background-color: #000000;
     min-height: 60px;
-    padding:25px;
+}
+.letterToGuess{
+    font-size: 48px;
+    font-family: "Rio Grande";
+    src:url("../fonts/RioGrande.ttf");
 }
 #keyboardPanel{
     min-height: 180px;

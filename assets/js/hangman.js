@@ -30,7 +30,8 @@
                 localStorage.wordToGuess = wordToGuess;
             }
         }
-        initWordPanel(wordToGuess);
+        //initWordPanel(wordToGuess);
+        showFoundLetters();
         return wordToGuess;
     }
     function initHangingScene(){
@@ -82,21 +83,27 @@
         localStorage.setItem("simpleBonus",100);
         localStorage.setItem("triesNb",0);
         localStorage.setItem("maxTries",6);
-        localStorage.setItem("choosenLettersTrue",[]);
-        localStorage.setItem("choosenLettersFalse",[]);
+        localStorage.setItem("choosenLettersTrue","");
+        localStorage.setItem("choosenLettersFalse","");
         //localStorage.setItem("keyboardKeys",["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]);
         localStorage.setItem("keyboardKeys",["A","Z","E","R","T","Y","U","I","O","P","Q","S","D","F","G","H","J","K","L","M","W","X","C","V","B","N"]);
         localStorage.setItem("keyboardFr",["A","Z","E","R","T","Y","U","I","O","P","Q","S","D","F","G","H","J","K","L","M","W","X","C","V","B","N"]);
         localStorage.setItem("keyboardEn",["Q","W","E","R","T","Y","U","I","O","P","A","S","D","F","G","H","J","K","L","Z","X","C","V","B","N","M"]);
     }
     function initNewGame(){
+        console.log("AVANT > " + localStorage.choosenLettersFalse);
+        let tempLg = localStorage.language;
+        let tempNbPlayedGames = localStorage.nbPlayedGames;
+        let bestScore = localStorage.bestScore;
+        let keyboardKeys = localStorage.keyboardKeys;
+        localStorage.clear();
+        initLocalStorage();
+        localStorage.language = tempLg;
+        localStorage.nbPlayedGames = tempNbPlayedGames;
+        localStorage.bestScore = bestScore;
+        localStorage.keyboardKeys = keyboardKeys;
         localStorage.wordToGuess = initWordToGuess();
-        localStorage.gameOver = "false";
-        localStorage.gameResult = "unknown"; // values: unknown, won, lost
-        localStorage.score = 0;
-        localStorage.triesNb = 0;
-        localStorage.choosenLettersTrue = [];
-        localStorage.choosenLettersFalse = [];
+        console.log("APRES > " + localStorage.choosenLettersFalse);
         initHangingScene();
         initScore();
         initTries();
@@ -119,7 +126,7 @@
         let message = "";
         if(localStorage.gameResult == "won"){
             switch(localStorage.language){
-                case "fr": message += "Félicitations! <br/>Vous avez trouvé le mot caché!"; break;
+                case "fr": message += "Félicitations! <br/>Vous avez trouvé le mot caché!!"; break;
                 case "en": message += "Congratulations! <br/>You found the hidden word!";break;
             }
         }else{
@@ -133,7 +140,6 @@
         document.getElementById("messagePanel").style.display = "block";
         localStorage.nbPlayedGames++;
         document.getElementById("playedGamesNb").innerHTML = localStorage.nbPlayedGames;
-        initNewGame();
         console.log(localStorage);
     }
     function showFoundLetters(){
@@ -141,7 +147,11 @@
         let foundLetters = "";
         wordToGuess.forEach(letter => {
             let letterTrue = localStorage.choosenLettersTrue.includes(letter.toUpperCase());
-            if(!letterTrue){foundLetters += "_";}else{foundLetters += letter.toUpperCase();}
+            if(!letterTrue){
+                foundLetters += "<div class='letterToGuess'>-</div>";
+            }else{
+                foundLetters += "<div class='letterToGuess'>" + letter.toUpperCase() + "</div>";
+            }
         })
         initWordPanel(foundLetters);
     }
@@ -179,7 +189,7 @@
     }
     function checkKeyProposal(key){
         // TO-DO
-        console.clear();
+        //console.clear();
         let isGameOver = (localStorage.gameOver === "true");
         let choosenLettersTrue = [];
         if(localStorage.choosenLettersTrue.length>0){
@@ -217,6 +227,7 @@
                     localStorage.triesNb++;
                     initTries();
                     initHangingScene();
+                    showFoundLetters();
                     if(localStorage.triesNb >= localStorage.maxTries){
                         // Plus d'essais disponibles, fin de la partie (défaite)
                         localStorage.gameOver = "true";
@@ -241,6 +252,7 @@
             panel1.style.display = "none";
             panel2.style.display = "block";
         }
+        initNewGame();
     }
     function updateLanguage(lg){
         switch (lg) {
