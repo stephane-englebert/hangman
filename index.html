@@ -15,53 +15,51 @@
                     <div id="gamePanel" class="row " style="display:none;">
                         <div id="scenePanel" class="col-12 col-md-12">
                             <div class="row">
-                                <div id="hangPanel" class="col-10 col-md-8">
+                                <div id="hangPanel" class="col-12 col-md-12">
                                     <div class="row">
-                                        <div id="hangedMan" class="col-12 col-md-4"></div>
+                                        <div id="hangedMan" class="col-9 col-md-4"></div>
+                                        <div id="dataPanel" class="col-3 col-md-4">
+                                            <div>Score</div>
+                                            <div id="score"></div>
+                                            <div>Tries</div>
+                                            <div id="tries"></div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div id="dataPanel" class="col-2 col-md-2">
-                                    <div>Score</div>
-                                    <div id="score"></div>
-                                    <div>Tries</div>
-                                    <div id="tries"></div>
-                                </div>
                             </div>
                         </div>
-                        <div id="" class="col-12 col-md-12">
-                            <div class="row">
-                                <div id="wordToGuessContainer" class="col-12 col-md-12 d-flex justify-content-around"></div>
+                        <div class="row">
+                            <div id="wordToGuessContainer" class="col-12 col-md-12 d-flex justify-content-around"></div>
+                            <div id="keyboardPanel" class="col-12 col-md-12 ">
+                                <div id="keyboardContainer" class="d-flex flex-wrap"></div>
                             </div>
-                        </div>
-                        <div id="keyboardPanel" class="col-12 col-md-12 ">
-                            <div id="keyboardContainer" class="d-flex flex-wrap"></div>
                         </div>
                     </div>
-                    <div id="messagePanel" class="row">
+                    <div id="messagePanel" class="row d-flex align-content-between">
                         <div id="statsContainer" class="col-12 col-md-12">
                             <div class="row">
-                                <div id="playedGames" class="col-6 col-md-6">
-                                    <div id="playedGamesTitle">Parties jouées</div>
+                                <div id="playedGames" class="col-6 col-md-6 ">
+                                    <div id="playedGamesTitle">Parties</div>
                                     <div id="playedGamesNb">0</div>
                                 </div>
                                 <div id="bestScore" class="col-6 col-md-6">
-                                    <div id="bestScoreTitle">Meilleur score</div>
+                                    <div id="bestScoreTitle">Score max</div>
                                     <div id="bestScoreAmount">0</div>
                                 </div>
                             </div>
                         </div>
-                        <div id="messageContainer" class="col-12 col-md-12">Bienvenue étranger et ... bonne chance!</div>
+                        <div id="messageContainer" class="col-12 col-md-12">Bienvenue etranger et ... bonne chance!</div>
                         <div id="buttonsContainer" class="col-12 col-md-12">
-                            <a href="#">
+                            <a href="#" style="text-decoration: none;">
                                 <button id="play" class="actionBtns">Jouer</button>
                             </a>
-                            <a href="assets/pages/thanks.html">
+                            <a href="assets/pages/thanks.html" style="text-decoration: none;">
                                 <button id="quit" class="actionBtns">Quitter</button>
                             </a>
                         </div>
                         <div id="languageContainer" class="col-12 col-md-12">
-                            <button id="btn-fr" class="focus">Français</button>
-                            <button id="btn-en" class="">Anglais</button>
+                            <button id="btn-fr" class="focus">Francais</button>
+                            <button id="btn-en" class="notFocus">Anglais</button>
                         </div>
                     </div>
                 </section>

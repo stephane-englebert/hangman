@@ -30,7 +30,7 @@
                 localStorage.wordToGuess = wordToGuess;
             }
         }
-        //initWordPanel(wordToGuess);
+        console.log(wordToGuess);
         showFoundLetters();
         return wordToGuess;
     }
@@ -126,18 +126,24 @@
         let message = "";
         if(localStorage.gameResult == "won"){
             switch(localStorage.language){
-                case "fr": message += "Félicitations! <br/>Vous avez trouvé le mot caché!!"; break;
-                case "en": message += "Congratulations! <br/>You found the hidden word!";break;
+                case "fr":
+                    message += "Felicitations! <br/>Vous avez trouve le mot:<br/>";
+                    message += "<span class='focusWord'>" + localStorage.wordToGuess + "</span>";
+                    break;
+                case "en":
+                    message += "Congratulations! <br/>You found the hidden word<br/>"
+                    message += "<span class='focusWord'>" + localStorage.wordToGuess + "</span>";
+                    break;
             }
         }else{
             switch(localStorage.language){
-                case "fr": message += "Partie perdue.<br/>Essayez à nouveau."; break;
+                case "fr": message += "Partie perdue.<br/>Essayez a nouveau."; break;
                 case "en": message += "Game over.<br/>Try again.";break;
             }
         }
         contentMsgPanel += message;
         document.getElementById("messageContainer").innerHTML = contentMsgPanel;
-        document.getElementById("messagePanel").style.display = "block";
+        document.getElementById("messagePanel").style.display = "flex";
         localStorage.nbPlayedGames++;
         document.getElementById("playedGamesNb").innerHTML = localStorage.nbPlayedGames;
         console.log(localStorage);
@@ -177,12 +183,12 @@
         let keyContainer = document.getElementById("key_" + key);
         if(choosenLettersFalse.includes(key.toUpperCase())){
             keyContainer.style.color = "red";
-            keyContainer.style.border = "1px solid red";
+            keyContainer.style.border = "2px dashed red";
             keyContainer.style.borderRadius = "4px";
             keyContainer.style.cursor = "auto";
         }else if(choosenLettersTrue.includes(key.toUpperCase())){
-            keyContainer.style.color = "green";
-            keyContainer.style.border = "1px solid green";
+            keyContainer.style.color = "#ab1409;";
+            keyContainer.style.border = "2px dashed #ab1409";
             keyContainer.style.borderRadius = "4px";
             keyContainer.style.cursor = "auto";
         }
@@ -246,11 +252,13 @@
         let panel1 = document.getElementById("gamePanel");
         let panel2 = document.getElementById("messagePanel");
         if(panel1.style.display == "none"){
+            panel2.className = "row";
             panel2.style.display = "none";
-            panel1.style.display = "block";
+            panel1.style.display = "inline-block";
         }else{
             panel1.style.display = "none";
-            panel2.style.display = "block";
+            panel2.className = "row d-flex align-content-between";
+            panel2.style.display = "flex";
         }
         initNewGame();
     }
@@ -259,26 +267,26 @@
             case "fr":
                 localStorage.keyboardKeys = localStorage.keyboardFr;
                 localStorage.language = "fr";
-                document.getElementById("playedGamesTitle").innerHTML = "Parties jouées";
-                document.getElementById("bestScoreTitle").innerHTML = "Meilleur score";
-                document.getElementById("messageContainer").innerHTML = "";
+                document.getElementById("playedGamesTitle").innerHTML = "Parties";
+                document.getElementById("bestScoreTitle").innerHTML = "Score max";
+                document.getElementById("messageContainer").innerHTML = "Un autre challenge?";
                 document.getElementById("play").innerHTML = "Jouer";
                 document.getElementById("quit").innerHTML = "Quitter";
-                document.getElementById("btn-fr").innerHTML = "Français";
+                document.getElementById("btn-fr").innerHTML = "Francais";
                 document.getElementById("btn-fr").className = "focus";
                 document.getElementById("btn-en").innerHTML = "Anglais";
-                document.getElementById("btn-en").className = "";
+                document.getElementById("btn-en").className = "notFocus";
                 break;
             case "en":
                 localStorage.keyboardKeys = localStorage.keyboardEn;
                 localStorage.language = "en";
-                document.getElementById("playedGamesTitle").innerHTML = "Played games";
+                document.getElementById("playedGamesTitle").innerHTML = "Games";
                 document.getElementById("bestScoreTitle").innerHTML = "Best score";
-                document.getElementById("messageContainer").innerHTML = "";
+                document.getElementById("messageContainer").innerHTML = "Another try?";
                 document.getElementById("play").innerHTML = "Play";
                 document.getElementById("quit").innerHTML = "Quit";
                 document.getElementById("btn-fr").innerHTML = "French";
-                document.getElementById("btn-fr").className = "";
+                document.getElementById("btn-fr").className = "notFocus";
                 document.getElementById("btn-en").innerHTML = "English";
                 document.getElementById("btn-en").className = "focus";
                 break;

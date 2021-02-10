@@ -5,24 +5,28 @@
 body{
     width: 100%;
     margin:auto;
+    background-color: #440f09 !important;
 }
 main{
     position:relative;
     max-width: 650px;
     margin:auto;
     color:#ffffff;
+    background-color: #440f09;
 }
 #statsPanel{
     background-color: #0d6efd;
 }
 #gamePanel{
-    background-color: #4f5050;
-    min-height: 360px;
+    /*background-color: #4f5050;*/
+    background-color: #fb7305;
+    min-height: 300px;
 }
 #scenePanel{
-    background-color: #000000;
-    background-image: url("../img/farwest.JPG");
-    background-size:contain;
+    /*background-color: #000000;*/
+    background-color: #fb7305;
+    background-image: url("../img/farwest_pic.JPG");
+    background-size:100% 100%;
     background-repeat: no-repeat;
     min-height: 250px;
 }
@@ -31,12 +35,17 @@ main{
     min-height: 250px;
 }
 #dataPanel{
-    /*background-color: #2c3034;*/
-    min-height: 250px;
+    /*background-color: #ab1409;*/
+    min-height: 225px;
 }
 #wordToGuessContainer{
-    background-color: #000000;
+    /*background-color: #fb7305;*/
+    /*#fb7305*/
     min-height: 60px;
+    /*color:#440f09;*/
+    color:#ab1409;
+    font-weight: bold;
+
 }
 .letterToGuess{
     font-size: 48px;
@@ -44,34 +53,91 @@ main{
     src:url("../fonts/RioGrande.ttf");
 }
 #keyboardPanel{
+    background-color: #fb7305;
     min-height: 180px;
     padding:25px;
     text-align: center;
     margin:auto;
 }
 .kbKeys{
-    height: 1.8em;
+    font-family: "Rio Grande";
+    src:url("../fonts/RioGrande.ttf");
+    /*height: 1.8em;*/
     margin-left:5px;
     margin-right:5px;
     margin-bottom: 5px;
-    font-size: 1.6em;
+    font-size: 2.6em;
     text-align: center;
-    border:1px solid #2c3034;
+    /*border:1px solid #440f09;*/
     border-radius:4px;
+    color:#440f09;
 }
 .zoomKey:hover{
-    font-size: 1.6em;
+    font-size: 2.6em;
     font-weight: bold;
     text-align:center;
-    color:yellow;
-    border:1px solid yellow;
-    border-radius:4px;
+    color:#ffffff;
 }
 #messagePanel {
-    background-color: #4f5050;
-    min-height: 600px;
+    font-family: "Rio Grande";
+    src:url("../fonts/RioGrande.ttf");
+    font-size: 1.8em;
+    color:#440f09;
+    background-color: #fb7305;
+    min-height: 700px;
     padding: 25px;
 }
-.focus{
-    border:2px solid black;
+#playedGames{
+    text-align: left;
+}
+#playedGamesNb{
+    text-align: left;
+    color: #ffffff;
+}
+#bestScore{
+    text-align: right;
+}
+#bestScoreAmount{
+    text-align: right;
+    color: #ffffff;
+}
+#messageContainer{
+    text-align: center;
+}
+.focusWord{
+    color:#ffffff;
+    letter-spacing: 5px;
+    font-size: 1.7em;
+}
+#buttonsContainer{
+    text-align: center;
+}
+.actionBtns{
+    border:5px solid #000000;
+    border-radius: 15px;
+    margin:20px;
+}
+.actionBtns:hover{
+    border:5px solid #ab1409;
+    color:#ab1409;
+}
+#languageContainer{
+    text-align: center;
+}
+.focus {
+    border:none;
+    background-color: #fb7305;
+    color: #ffffff;
+    outline-style: none;
+}
+.focus:focus{
+    outline-color:#fb7305;
+}
+.notFocus {
+    background-color: #fb7305;
+    border: none;
+    outline-style: none;
+}
+.notFocus:hover{
+    color:#ab1409;
 }
