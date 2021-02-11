@@ -17,12 +17,13 @@
                             <div class="row">
                                 <div id="hangPanel" class="col-12 col-md-12">
                                     <div class="row">
-                                        <div id="hangedMan" class="col-9 col-md-4"></div>
+                                        <div id="titleGame" class="col-3 col-md-4"><p>The</p><p>Hangman</p></div>
+                                        <div id="hangedMan" class="col-6 col-md-4 ">
+                                            <canvas id="canvasHangedMan" width="140" height="300" style=""></canvas>
+                                        </div>
                                         <div id="dataPanel" class="col-3 col-md-4">
                                             <div>Score</div>
                                             <div id="score"></div>
-                                            <div>Tries</div>
-                                            <div id="tries"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -48,7 +49,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="messageContainer" class="col-12 col-md-12">Bienvenue etranger et ... bonne chance!</div>
+                        <div id="messageContainer" class="col-12 col-md-12">Bienvenue etranger et ... <br/>bonne chance!</div>
                         <div id="buttonsContainer" class="col-12 col-md-12">
                             <a href="#" style="text-decoration: none;">
                                 <button id="play" class="actionBtns">Jouer</button>
@@ -57,15 +58,26 @@
                                 <button id="quit" class="actionBtns">Quitter</button>
                             </a>
                         </div>
+                        <div id="musicContainer">
+                            <audio controls autoplay loop>
+                                <source src="assets/sounds/western_sample.wav" type="audio/ogg">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
                         <div id="languageContainer" class="col-12 col-md-12">
                             <button id="btn-fr" class="focus">Francais</button>
                             <button id="btn-en" class="notFocus">Anglais</button>
+                        </div>
+                        <div id="soundSamples" style="display:none;">
+                            <audio id="gunShot" src="assets/sounds/gunshot.wav"></audio>
+                            <audio id="gunLoad" src="assets/sounds/gun_loading.wav"></audio>
                         </div>
                     </div>
                 </section>
             </div>
         </main>
-        <footer></footer>
+        <footer>
+        </footer>
         <script src="assets/js/bootstrap.min.js"></script>
         <script src="assets/js/hangman.js"></script>
     </body>

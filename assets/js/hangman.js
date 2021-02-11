@@ -8,12 +8,12 @@
         // ENCODE MORE WORDS
         let arrayWords = [];
         if(localStorage.language == "fr"){
-            arrayWords = ["coeur","vignette","tasse","lampe","voiture","superbe","dentelle"];
-            arrayWords = arrayWords.concat(["chapeau","cheveux","maison","grenouille","serpent"]);
+            arrayWords = ["vautour","lasso","cheval","bottes","eperons","sherif","fleche","chili","harmonica","etoile"];
+            arrayWords = arrayWords.concat(["chapeau","goudron","plume","whisky","serpent","tonneau","pepite","sable","betail","cloture"]);
         }
         if(localStorage.language == "en"){
-            arrayWords = ["heart","description","blue","christmas","balloon","beautiful","flower"];
-            arrayWords = arrayWords.concat(["pudding","football","snack","king","snake"]);
+            arrayWords = ["saloon","cowboy","ranch","horse","revolver","cactus","whisky","barrel","nugget","sand"];
+            arrayWords = arrayWords.concat(["lasso","boots","feather","wanted","snake","campfire","sherif","fencing","railway","jeans"]);
         }
         return arrayWords;
     }
@@ -36,18 +36,21 @@
     }
     function initHangingScene(){
         // TO-DO
-        let target = document.getElementById("hangedMan");
-        target.innerHTML = localStorage.triesNb;
+        let nbBodyParts = localStorage.triesNb;
+        let canvas = document.getElementById('canvasHangedMan');
+        let ctx = canvas.getContext('2d');
+        let img = new Image();
+        img.src = 'assets/img/hanging' + nbBodyParts + '.JPG';
+        img.onload = function() {
+            var pattern = ctx.createPattern(img, 'repeat');
+            ctx.fillStyle = pattern;
+            ctx.fillRect(0, 0, 140, 300);
+        };
     }
     function initScore(){
         // TO-DO
         let target = document.getElementById("score");
         target.innerHTML = localStorage.score;
-    }
-    function initTries(){
-        // TO-DO
-        let target = document.getElementById("tries");
-        target.innerHTML = localStorage.triesNb + "/" + localStorage.maxTries;
     }
     function initWordPanel(wordToGuess){
         // TO-DO
@@ -106,7 +109,6 @@
         console.log("APRES > " + localStorage.choosenLettersFalse);
         initHangingScene();
         initScore();
-        initTries();
         initKeyboard();
     }
     // The function 'wordGuessed' checks if every letters have been found by user and returns a boolean
@@ -129,16 +131,26 @@
                 case "fr":
                     message += "Felicitations! <br/>Vous avez trouve le mot:<br/>";
                     message += "<span class='focusWord'>" + localStorage.wordToGuess + "</span>";
+                    message += "<br/>Votre score <span style='color:#ffffff;'>" + localStorage.score +"</span>";
                     break;
                 case "en":
                     message += "Congratulations! <br/>You found the hidden word<br/>"
                     message += "<span class='focusWord'>" + localStorage.wordToGuess + "</span>";
+                    message += "<br/>Your score <span style='color:#ffffff;'>" + localStorage.score +"</span>";
                     break;
             }
         }else{
             switch(localStorage.language){
-                case "fr": message += "Partie perdue.<br/>Essayez a nouveau."; break;
-                case "en": message += "Game over.<br/>Try again.";break;
+                case "fr":
+                    message += "Partie perdue.<br/>Essayez a nouveau.";
+                    message += "<br/>Le mot a deviner etait:<br/>";
+                    message += "<span class='focusWord'>" + localStorage.wordToGuess + "</span>";
+                    break;
+                case "en":
+                    message += "Game over.<br/>Try again.";
+                    message += "<br/>The word to guess was:<br/>";
+                    message += "<span class='focusWord'>" + localStorage.wordToGuess + "</span>";
+                    break;
             }
         }
         contentMsgPanel += message;
@@ -193,6 +205,10 @@
             keyContainer.style.cursor = "auto";
         }
     }
+    function playSoundSample(soundTrack){
+        let audio = document.getElementById(soundTrack);
+        audio.play();
+    }
     function checkKeyProposal(key){
         // TO-DO
         //console.clear();
@@ -214,6 +230,7 @@
             if(!alreadyProposed){
                 if(localStorage.wordToGuess.includes(key.toLowerCase())){
                     // La lettre proposée est comprise dans le mot à deviner
+                    playSoundSample("gunLoad");
                     choosenLettersTrue.push(key);
                     localStorage.choosenLettersTrue = choosenLettersTrue.toString() ;
                     updateScore();
@@ -228,10 +245,10 @@
                     }
                 }else{
                     // La lettre proposée n'est pas comprise dans le mot à deviner
+                    playSoundSample("gunShot");
                     choosenLettersFalse.push(key);
                     localStorage.choosenLettersFalse = choosenLettersFalse.toString();
                     localStorage.triesNb++;
-                    initTries();
                     initHangingScene();
                     showFoundLetters();
                     if(localStorage.triesNb >= localStorage.maxTries){
@@ -243,6 +260,8 @@
                         updateKeyboardKey(key);
                     }
                 }
+            }else{
+                playSoundSample("gunLoad");
             }
             console.log(choosenLettersTrue);
             console.log(choosenLettersFalse);
@@ -299,14 +318,15 @@
         let wordToGuess = initWordToGuess();
         initHangingScene();
         initScore();
-        initTries();
         initKeyboard();
         localStorage.keyboardKeys.split(",").forEach(key => {
             document.getElementById("key_"+key.toUpperCase()).addEventListener("click", () => {
                 checkKeyProposal(key.toUpperCase());
             })
         })
-        document.getElementById("play").addEventListener("click", () => togglePanels());
+        document.getElementById("play").addEventListener("click", () => {
+            togglePanels();
+        });
         document.getElementById("btn-fr").addEventListener("click", () => updateLanguage("fr"));
         document.getElementById("btn-en").addEventListener("click", () => updateLanguage("en"));
     }
